@@ -1,0 +1,20 @@
+Fotogram – Stand nach dem Bilder-Schritt
+
+Alle zwölf Galeriebilder sind lokal im Ordner assets gespeichert.
+Sie wurden als WebP komprimiert und sind jeweils kleiner als 500 KB.
+Die Galerie lädt keine Fotos mehr über zeitlich begrenzte Figma-Links.
+
+Bereits enthalten:
+- dynamisches Rendern aller Fotos über JavaScript
+- Thumbnail-Ansicht und Hover-Effekt
+- große Dialogansicht
+- vorheriges und nächstes Bild
+- Schließen per Button, Hintergrund und Esc-Taste
+- Bedienung mit Tab- und Pfeiltasten
+- responsive Desktop- und Mobilansicht
+
+Nächster Schritt:
+- Logos und Icons lokal einbauen
+- danach abschließende Kontrolle der gesamten Seite
+
+Zum Öffnen: index.html mit Live Server starten.
