@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Fotogram – zwölf Bilder entdecken und in der Großansicht durchblättern.">
+
+    <title>Fotogram – Your personal photo album</title>
+
+    <link rel="icon" type="image/png" href="./assets/favicon.png">
+    <link rel="stylesheet" href="./style.css">
+    <script src="./script.js" defer></script>
+</head>
+
+<body onload="init()">
+    <header>
+        <div class="header-content">
+            <a class="logo" href="./index.html" aria-label="Fotogram Startseite">
+                <span class="logo-symbol" aria-hidden="true"></span>
+                <span class="logo-text">Fotogram</span>
+            </a>
+        </div>
+    </header>
+
+    <main>
+        <section class="album" aria-labelledby="albumTitle">
+            <h1 id="albumTitle">Your personal photo album</h1>
+
+            <div id="gallery" class="gallery"></div>
+
+            <noscript>
+                Bitte aktiviere JavaScript, um die Fotogalerie anzuzeigen.
+            </noscript>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-logo">
+                <span class="footer-logo-symbol" aria-hidden="true"></span>
+                <span>Developer Akademie</span>
+            </div>
+
+            <p>© 2023 Developer Akademie GmbH</p>
+        </div>
+    </footer>
+
+    <dialog id="photoDialog" aria-labelledby="dialogTitle" onclose="dialogClosed()"
+        onkeydown="handleKey(event)" onclick="closeOnBackground(event)">
+
+        <div class="dialog-content">
+            <div class="dialog-header">
+                <h2 id="dialogTitle" class="dialog-title"></h2>
+
+                <button type="button" class="close-button" aria-label="Großansicht schließen"
+                    onclick="closeDialog()">
+                    <img class="icon" src="./assets/close.png" alt="">
+                </button>
+            </div>
+
+            <div class="image-container" id="imageContainer"></div>
+
+            <div class="navigation">
+                <button type="button" class="arrow-button previous" aria-label="Vorheriges Bild"
+                    onclick="changePhoto(-1)">
+                    <img class="icon" src="./assets/Arrow-Right.png" alt="">
+                </button>
+
+                <span id="counter" class="counter"></span>
+
+                <button type="button" class="arrow-button" aria-label="Nächstes Bild"
+                    onclick="changePhoto(1)">
+                    <img class="icon" src="./assets/Arrow-Right.png" alt="">
+                </button>
+            </div>
+        </div>
+    </dialog>
+</body>
+
+</html>
