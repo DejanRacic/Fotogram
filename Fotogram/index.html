@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="de">
+
 <head>
     <meta charset="UTF-8">
 
@@ -14,6 +15,12 @@
     >
 
     <title>Fotogram – Your personal photo album</title>
+
+    <link
+        rel="icon"
+        type="image/png"
+        href="./assets/favicon.png.png"
+    >
 
     <style>
         * {
@@ -63,6 +70,7 @@
         [hidden] {
             display: none !important;
         }
+
 
         /* HEADER */
 
@@ -120,6 +128,7 @@
             letter-spacing: -1px;
         }
 
+
         /* MAIN */
 
         main {
@@ -144,6 +153,7 @@
             line-height: 50px;
             font-weight: 800;
         }
+
 
         /* GALERIE */
 
@@ -191,6 +201,7 @@
             padding: 12px;
             font-size: 14px;
         }
+
 
         /* FOOTER */
 
@@ -246,6 +257,7 @@
             font-size: 14px;
             text-align: center;
         }
+
 
         /* DIALOG */
 
@@ -342,6 +354,7 @@
             text-align: center;
         }
 
+
         /* NAVIGATION */
 
         .navigation {
@@ -387,6 +400,7 @@
         dialog button:focus-visible {
             outline-color: white;
         }
+
 
         /* RESPONSIVE */
 
@@ -534,57 +548,98 @@
             }
         }
     </style>
+
+    <script src="./script.js" defer></script>
+
 </head>
 
-<body>
+<body onload="init()">
+
     <header>
         <div class="header-content">
+
             <a
                 class="logo"
                 href="./index.html"
                 aria-label="Fotogram Startseite"
             >
-                <span class="logo-symbol" aria-hidden="true"></span>
-                <span class="logo-text">Fotogram</span>
+                <span
+                    class="logo-symbol"
+                    aria-hidden="true"
+                ></span>
+
+                <span class="logo-text">
+                    Fotogram
+                </span>
             </a>
+
         </div>
     </header>
 
+
     <main>
-        <section class="album" aria-labelledby="albumTitle">
+
+        <section
+            class="album"
+            aria-labelledby="albumTitle"
+        >
+
             <h1 id="albumTitle" lang="en">
                 Your personal photo album
             </h1>
 
-            <div id="gallery" class="gallery"></div>
+            <div
+                id="gallery"
+                class="gallery"
+            ></div>
 
             <noscript>
                 Bitte aktiviere JavaScript, um die Fotogalerie anzuzeigen.
             </noscript>
+
         </section>
+
     </main>
 
+
     <footer>
+
         <div class="footer-content">
+
             <div class="footer-logo">
+
                 <span
                     class="footer-logo-symbol"
                     aria-hidden="true"
                 ></span>
 
-                <span>Developer Akademie</span>
+                <span>
+                    Developer Akademie
+                </span>
+
             </div>
 
-            <p>© 2023 Developer Akademie GmbH</p>
+            <p>
+                © 2023 Developer Akademie GmbH
+            </p>
+
         </div>
+
     </footer>
+
 
     <dialog
         id="photoDialog"
         aria-labelledby="dialogTitle"
+        onclose="dialogClosed()"
+        onkeydown="handleKey(event)"
+        onclick="closeOnBackground(event)"
     >
+
         <div class="dialog-content">
+
             <div class="dialog-header">
+
                 <h2
                     id="dialogTitle"
                     class="dialog-title"
@@ -593,282 +648,72 @@
                 <button
                     type="button"
                     class="close-button"
-                    id="closeButton"
                     aria-label="Großansicht schließen"
-                    autofocus
+                    onclick="closeDialog()"
                 >
+
                     <img
                         class="icon"
                         src="./assets/close.png"
                         alt=""
                     >
+
                 </button>
+
             </div>
+
 
             <div
                 class="image-container"
                 id="imageContainer"
             ></div>
 
+
             <div class="navigation">
+
                 <button
                     type="button"
                     class="arrow-button previous"
-                    id="previousButton"
                     aria-label="Vorheriges Bild"
+                    onclick="changePhoto(-1)"
                 >
+
                     <img
                         class="icon"
                         src="./assets/Arrow-Right.png"
                         alt=""
                     >
+
                 </button>
+
 
                 <span
                     id="counter"
                     class="counter"
-                    aria-live="polite"
-                    aria-atomic="true"
                 ></span>
+
 
                 <button
                     type="button"
                     class="arrow-button"
-                    id="nextButton"
                     aria-label="Nächstes Bild"
+                    onclick="changePhoto(1)"
                 >
+
                     <img
                         class="icon"
                         src="./assets/Arrow-Right.png"
                         alt=""
                     >
+
                 </button>
+
             </div>
+
         </div>
+
     </dialog>
 
-    <script>
-        const photos = [
-            {
-                src: "./assets/photo-1.webp",
-                title: "Alaska-810433_1280",
-                alt: "Gletscher und Berge in Alaska"
-            },
-            {
-                src: "./assets/photo-2.webp",
-                title: "Anime-8788959_1280",
-                alt: "Beleuchtete Straße im Anime-Stil"
-            },
-            {
-                src: "./assets/photo-3.webp",
-                title: "Atmosphere-8752835_1280",
-                alt: "Sonnenlicht zwischen dunklen Wolken"
-            },
-            {
-                src: "./assets/photo-4.webp",
-                title: "Blue-tit-8521052_1280",
-                alt: "Blaumeise auf einem Zweig"
-            },
-            {
-                src: "./assets/photo-5.webp",
-                title: "Hurricane-92968_1280",
-                alt: "Wirbelsturm aus dem Weltall"
-            },
-            {
-                src: "./assets/photo-6.webp",
-                title: "Lake-2896379_1280",
-                alt: "Berge spiegeln sich in einem See"
-            },
-            {
-                src: "./assets/photo-7.webp",
-                title: "Moorente-8783210_1280",
-                alt: "Ente auf dem Wasser"
-            },
-            {
-                src: "./assets/photo-8.webp",
-                title: "Sea-2563389_1280",
-                alt: "Person auf einem Felsen am Meer"
-            },
-            {
-                src: "./assets/photo-9.webp",
-                title: "Snow-bunting-6781122_1280",
-                alt: "Schneeammer auf einem Felsen"
-            },
-            {
-                src: "./assets/photo-10.webp",
-                title: "Snow-leopard-cubs-8039138_1280",
-                alt: "Junge Schneeleoparden"
-            },
-            {
-                src: "./assets/photo-11.webp",
-                title: "Travel-8785493_1280",
-                alt: "Berglandschaft unter blauem Himmel"
-            },
-            {
-                src: "./assets/photo-12.webp",
-                title: "Winter-1675197_1280",
-                alt: "Verschneiter Baum"
-            }
-        ];
-
-        let currentIndex = 0;
-        let opener = null;
-        let startedOutside = false;
-
-        const gallery = document.getElementById("gallery");
-        const dialog = document.getElementById("photoDialog");
-        const dialogTitle = document.getElementById("dialogTitle");
-        const imageContainer = document.getElementById("imageContainer");
-        const counter = document.getElementById("counter");
-        const closeButton = document.getElementById("closeButton");
-        const previousButton = document.getElementById("previousButton");
-        const nextButton = document.getElementById("nextButton");
-
-        function renderGallery() {
-            gallery.replaceChildren();
-
-            photos.forEach((photo, index) => {
-                const button = document.createElement("button");
-                const image = document.createElement("img");
-
-                button.type = "button";
-                button.className = "thumbnail";
-                button.setAttribute(
-                    "aria-label",
-                    `${photo.title} vergrößern`
-                );
-                button.setAttribute("aria-haspopup", "dialog");
-
-                image.src = photo.src;
-                image.alt = photo.alt;
-                image.width = 150;
-                image.height = 150;
-                image.loading = "lazy";
-                image.decoding = "async";
-
-                image.addEventListener("error", () => {
-                    const message = document.createElement("span");
-
-                    message.className = "image-error";
-                    message.textContent =
-                        `${photo.title} – Bild nicht verfügbar`;
-
-                    button.replaceChildren(message);
-                });
-
-                button.append(image);
-
-                button.addEventListener("click", () => {
-                    currentIndex = index;
-                    opener = button;
-
-                    updateDialog();
-                    dialog.showModal();
-                    document.body.classList.add("dialog-open");
-                });
-
-                gallery.append(button);
-            });
-        }
-
-        function updateDialog() {
-            const photo = photos[currentIndex];
-            const image = document.createElement("img");
-            const status = document.createElement("p");
-
-            dialogTitle.textContent = photo.title;
-            counter.textContent =
-                `${currentIndex + 1} / ${photos.length}`;
-
-            image.className = "large-image";
-            image.alt = photo.alt;
-            image.hidden = true;
-
-            status.className = "image-status";
-            status.setAttribute("role", "status");
-            status.textContent = "Bild wird geladen …";
-
-            imageContainer.replaceChildren(image, status);
-
-            image.addEventListener("load", () => {
-                image.hidden = false;
-                status.hidden = true;
-            });
-
-            image.addEventListener("error", () => {
-                status.textContent = "Bild konnte nicht geladen werden.";
-            });
-
-            image.src = photo.src;
-        }
-
-        function changePhoto(direction) {
-            currentIndex =
-                (currentIndex + direction + photos.length) %
-                photos.length;
-
-            updateDialog();
-        }
-
-        function isOutsideDialog(event) {
-            const box = dialog.getBoundingClientRect();
-
-            return (
-                event.clientX < box.left ||
-                event.clientX > box.right ||
-                event.clientY < box.top ||
-                event.clientY > box.bottom
-            );
-        }
-
-        previousButton.addEventListener("click", () => {
-            changePhoto(-1);
-        });
-
-        nextButton.addEventListener("click", () => {
-            changePhoto(1);
-        });
-
-        closeButton.addEventListener("click", () => {
-            dialog.close();
-        });
-
-        dialog.addEventListener("close", () => {
-            document.body.classList.remove("dialog-open");
-            opener?.focus();
-        });
-
-        dialog.addEventListener("keydown", (event) => {
-            if (event.key === "ArrowLeft") {
-                event.preventDefault();
-                changePhoto(-1);
-            }
-
-            if (event.key === "ArrowRight") {
-                event.preventDefault();
-                changePhoto(1);
-            }
-        });
-
-        dialog.addEventListener("pointerdown", (event) => {
-            startedOutside =
-                event.target === dialog &&
-                isOutsideDialog(event);
-        });
-
-        dialog.addEventListener("click", (event) => {
-            if (
-                startedOutside &&
-                event.target === dialog &&
-                isOutsideDialog(event)
-            ) {
-                dialog.close();
-            }
-
-            startedOutside = false;
-        });
-
-        renderGallery();
-    </script>
 </body>
+
 </html>
